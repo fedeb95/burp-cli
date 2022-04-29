@@ -1,0 +1,39 @@
+POST /users HTTP/2
+Host: portswigger.net
+Cookie: _ga=GA1.2.156403425.1651172502; t=JRwbeKVzIaF9tz8LwnMgOw%3D%3D; __stripe_mid=5d18c640-f404-40d6-8e8a-f59c19b95c8a1d6854; SessionId=CfDJ8GooalWZfctGi950KWwCgy8%2FQEoUWIRTllYdG2WeWlhi6FhkYYObE%2F6vm8HrAW%2FtLgrSFaWIRThew%2F5G1ubgq4va60afGqzC6zMxT9VqvWj7xwwjzVOH6lRx12rHnV4s4cPMpE7WChJRuWMWqEaAqvd735ub8i6osyVKYDDUm2jT; _gid=GA1.2.636110877.1651275405; _gat_UA-58487031-8=1; _gat=1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:99.0) Gecko/20100101 Firefox/99.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+X-Requested-With: XMLHttpRequest
+Content-Type: multipart/form-data; boundary=---------------------------415424925519687985461173034651
+Content-Length: 807
+Origin: https://portswigger.net
+Referer: https://portswigger.net/users
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+Te: trailers
+
+-----------------------------415424925519687985461173034651
+Content-Disposition: form-data; name="RequestVerificationToken"
+
+188EEEC526D4A06E4F1DC360F43D42E640FED5A270BE77C6C0CE6CEEC51A39F737DC9AE8CB3B1B7B924C30853D8A392E22346326EB2F8F3835FDCA27DE75459D
+-----------------------------415424925519687985461173034651
+Content-Disposition: form-data; name="EmailAddress"
+
+user
+-----------------------------415424925519687985461173034651
+Content-Disposition: form-data; name="Password"
+
+~~
+-----------------------------415424925519687985461173034651
+Content-Disposition: form-data; name="RememberMe"
+
+false
+-----------------------------415424925519687985461173034651
+Content-Disposition: form-data; name="ajaxRequest"
+
+true
+-----------------------------415424925519687985461173034651--
+
