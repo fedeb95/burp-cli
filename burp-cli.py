@@ -38,6 +38,13 @@ def make_request(args, request_lines):
     else:
         print('Method not yet implemented!')
 
+def read_file(filename):
+    if not os.path.isfile(filename):
+        print(f'File {filename} not found')
+    else:
+        with open(filename) as f:
+            lines = f.read().splitlines()
+    return lines
 
 def main():
     parser = argparse.ArgumentParser(description='burp-cli - Burp Suite functionalities in the terminal')
@@ -45,27 +52,15 @@ def main():
                         help='Verbose output.')
     parser.add_argument('-r', '--request', dest='request', action='store',
                         help='Path of the file containing a request')
-    parser.add_argument('-c', '--character', dest='character', action='store', default='~',
+    parser.add_argument('-c', '--placeholder-char', dest='placeholder', action='store', default='~',
                         help='Character used to identify positions in the request')
     parser.add_argument('-p', '--payload', dest='payload', action='store',
                         help='Path of the file containing payloads')
     args = parser.parse_args()
 
-    filename = args.request
-    if not os.path.isfile(filename):
-        print(f'File {filename} not found')
-    else:
-        with open(filename) as f:
-            request_lines = f.read().splitlines()  
-
-    filename = args.payload
-    if not os.path.isfile(filename):
-        print(f'File {filename} not found')
-    else:
-        with open(filename) as f:
-            payloads = f.read().splitlines()  
-
-    placeholder = args.character
+    request_lines = read_file(args.request)
+    payloads = read_file(args.payload)
+    placeholder = args.placeholder
     for payload in payloads:
        sub_lines = [re.sub(f'{placeholder}.*{placeholder}', payload, line) for line in request_lines]
        make_request(args, sub_lines)
