@@ -60,7 +60,7 @@ def main():
     parser.add_argument('-r', '--request', dest='request', action='store',
                         help='Path of the file containing a request')
     parser.add_argument('-c', '--payload-positions-char', dest='placeholder', action='store', default='~',
-                        help='Character used to identify payload positions in the request')
+                        help="Character used to identify payload positions in the request. Defaults to '~'")
     parser.add_argument('-p', '--payload', dest='payload', action='store',
                         help='Path of the file containing payloads')
     args = parser.parse_args()
