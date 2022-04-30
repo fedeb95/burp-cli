@@ -1,44 +1,44 @@
 import argparse
-import os.path
-import requests
-import re
 import random
 import pyfiglet
 
+import os.path
+import re
+
+import socket
+import ssl
+
+
 def make_request(args, request_lines):
-    # first line is like POST /resource 
-    method = request_lines[0].split(' ')[0]
-    resource = request_lines[0].split(' ')[1]
     # second line is like Host: host.com
     host = request_lines[1].split(' ')[1]
-    url = f'https://{host}{resource}'
 
-    headers = {}
-    body_list = []
-    end_header = False
-    for line in request_lines[1:]:
-        # stop at new line between headers and body
-        if line == '' or line == '\n':
-            end_header = True
-        if end_header:
-            body_list.append(line)
-        else:
-            split = line.split(':')
-            headers[split[0].strip()] = split[1].strip()
+    context = ssl.create_default_context()
+    sock = socket.create_connection((host.strip(),443))  
+    ssock = context.wrap_socket(sock, server_hostname=host)
 
-    request_txt = '\n'.join(body_list)
-    if method == 'POST':
-        res = requests.post(url, data=request_txt, headers=headers)
+    request = '\r\n'.join(request_lines).encode('utf-8') + b'\r\n'
+    ssock.sendall(request)  
+     
+    response = b''
+    while True:
+        data = ssock.recv(2048)
+        if ( len(data) < 1 ) :
+            break
+        response += data
+
+    if args.verbose:
         print('=== REQUEST START ===')
-        print(f'Called {res.request.url}')
-        print(f'Body {res.request.body}')
-        print(f'Headers {res.request.headers}')
+        print(request)
         print('=== REQUEST END ===')
         print('=== RESPONSE START ===')
-        print(res.headers)
+        print(response)
         print('=== RESPONSE END ===')
-    else:
-        print('Method not yet implemented!')
+        time = 'unknown'
+        status = 'uknown'
+
+    size = len(response)
+    print(f'Status: {status} | Time: {time} | Size: {size}')
 
 def read_file(filename):
     if not os.path.isfile(filename):

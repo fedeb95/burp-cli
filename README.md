@@ -44,5 +44,8 @@ As of now it only implements *Intruder* with the *Sniper* attack type. You can s
 you want, however just one file for payloads is supported, so in the same request
 each payload position will have the same payload.
 
+## Problems
+Currently burp-cli only supports HTTP 1.0 for request, due to using sockets directly.
+
 ## TODO
 A lot.

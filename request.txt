@@ -1,4 +1,4 @@
-POST /users HTTP/2
+POST /users HTTP/1.0
 Host: portswigger.net
 Cookie: _ga=GA1.2.156403425.1651172502; t=JRwbeKVzIaF9tz8LwnMgOw%3D%3D; __stripe_mid=5d18c640-f404-40d6-8e8a-f59c19b95c8a1d6854; SessionId=CfDJ8GooalWZfctGi950KWwCgy8%2FQEoUWIRTllYdG2WeWlhi6FhkYYObE%2F6vm8HrAW%2FtLgrSFaWIRThew%2F5G1ubgq4va60afGqzC6zMxT9VqvWj7xwwjzVOH6lRx12rHnV4s4cPMpE7WChJRuWMWqEaAqvd735ub8i6osyVKYDDUm2jT; _gid=GA1.2.636110877.1651275405; _gat_UA-58487031-8=1; _gat=1
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:99.0) Gecko/20100101 Firefox/99.0
