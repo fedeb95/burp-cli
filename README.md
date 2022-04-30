@@ -20,8 +20,31 @@ its companion.
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+```
+
+## Example
+To make a simple attack, run
+```
 python burp-cli.py -r ./request.txt -p ./payloads.txt
 ```
+If you get
+```
+ __                                              ___           
+/\ \                                            /\_ \    __    
+\ \ \____  __  __  _ __   _____              ___\//\ \  /\_\   
+ \ \ '__`\/\ \/\ \/\`'__\/\ '__`\  _______  /'___\\ \ \ \/\ \  
+  \ \ \L\ \ \ \_\ \ \ \/ \ \ \L\ \/\______\/\ \__/ \_\ \_\ \ \ 
+   \ \_,__/\ \____/\ \_\  \ \ ,__/\/______/\ \____\/\____\\ \_\
+    \/___/  \/___/  \/_/   \ \ \/           \/____/\/____/ \/_/
+                            \ \_\                              
+                             \/_/                              
+
+Status: 200 | Time: 0.063 | Size: 4901
+Status: 200 | Time: 0.0513 | Size: 4607
+Status: 200 | Time: 0.0512 | Size: 4607
+```
+Yay! The attack was successful. Response status code, response time and length in bytes is displayed.
+
 ## Usage
 ```
 usage: burp-cli.py [-h] [-v] [-r REQUEST] [-c PLACEHOLDER] [-p PAYLOAD]
@@ -34,7 +57,8 @@ options:
   -r REQUEST, --request REQUEST
                         Path of the file containing a request
   -c PLACEHOLDER, --payload-positions-char PLACEHOLDER
-                        Character used to identify payload positions in the request
+                        Character used to identify payload positions in
+                        the request. Defaults to '~'
   -p PAYLOAD, --payload PAYLOAD
                         Path of the file containing payloads
 ```
