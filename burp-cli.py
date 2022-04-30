@@ -2,6 +2,8 @@ import argparse
 import os.path
 import requests
 import re
+import random
+import pyfiglet
 
 def make_request(args, request_lines):
     # first line is like POST /resource 
@@ -57,6 +59,9 @@ def main():
     parser.add_argument('-p', '--payload', dest='payload', action='store',
                         help='Path of the file containing payloads')
     args = parser.parse_args()
+
+    banner = pyfiglet.Figlet(font=random.choice(pyfiglet.FigletFont.getFonts()))
+    print(banner.renderText('burp-cli'))
 
     request_lines = read_file(args.request)
     payloads = read_file(args.payload)
