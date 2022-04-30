@@ -28,7 +28,8 @@ def make_request(args, request_lines):
         if ( len(data) < 1 ) :
             break
         response += data
-    request_time = time.perf_counter() - start
+    request_time = time.perf_counter()
+    request_time = '{0:.4g}'.format(request_time-start)
 
     if args.verbose:
         print('=== REQUEST START ===')
