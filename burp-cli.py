@@ -4,6 +4,7 @@ import pyfiglet
 
 import os.path
 import re
+import time
 
 import socket
 import ssl
@@ -20,12 +21,14 @@ def make_request(args, request_lines):
     request = '\r\n'.join(request_lines).encode('utf-8') + b'\r\n'
     ssock.sendall(request)  
      
+    start = time.perf_counter()
     response = b''
     while True:
         data = ssock.recv(2048)
         if ( len(data) < 1 ) :
             break
         response += data
+    request_time = time.perf_counter() - start
 
     if args.verbose:
         print('=== REQUEST START ===')
@@ -34,13 +37,14 @@ def make_request(args, request_lines):
         print('=== RESPONSE START ===')
         print(response)
         print('=== RESPONSE END ===')
-        time = 'unknown'
-        status = 'uknown'
 
+    status = re.search(r'HTTP\/[0-9](.[0-9])? ([0-9]{3})', str(response))
+    status = status.group(2)
     size = len(response)
-    print(f'Status: {status} | Time: {time} | Size: {size}')
+    print(f'Status: {status} | Time: {request_time} | Size: {size}')
 
 def read_file(filename):
+    lines = []
     if not os.path.isfile(filename):
         print(f'File {filename} not found')
     else:
