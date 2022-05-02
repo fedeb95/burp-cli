@@ -5,12 +5,15 @@ import pyfiglet
 import os.path
 import re
 import time
+import itertools
 
 import socket
 import ssl
 
 
-def make_request(args, request_lines):
+def make_request(args, request_text):
+    print(request_text)
+    request_lines = request_text.split('\n')
     # second line is like Host: host.com
     host = request_lines[1].split(' ')[1]
 
@@ -69,11 +72,20 @@ def main():
     print(banner.renderText('burp-cli'))
 
     request_lines = read_file(args.request)
+    request_text = '\r\n'.join(request_lines)
     payloads = read_file(args.payload)
     placeholder = args.placeholder
-    for payload in payloads:
-       sub_lines = [re.sub(f'{placeholder}.*{placeholder}', payload, line) for line in request_lines]
-       make_request(args, sub_lines)
+    positions = re.findall(f'{placeholder}[^~]*{placeholder}', request_text, re.MULTILINE)
+
+    # python magic to get all permutations with repetitions of payloads
+    parameters = itertools.product(*([payloads] * len(positions)))
+    for param in parameters:
+        substituted = request_text
+        for i in range(0, len(positions)):
+            print(positions[i])
+            print(param[i])
+            substituted = re.sub(positions[i], param[i], substituted, re.MULTILINE)
+        make_request(args, substituted)
     
 if __name__=='__main__':
     main()
