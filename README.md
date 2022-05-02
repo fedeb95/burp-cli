@@ -64,9 +64,8 @@ options:
 ```
 
 ## Features
-As of now it only implements *Intruder* with the *Sniper* attack type. You can specify as many positions as
-you want, however just one file for payloads is supported, so in the same request
-each payload position will have the same payload.
+As of now it only implements *Intruder* with the *Sniper* attack type, manually
+providing a file with payloads, one per line (see `./payloads.txt`).
 
 ## Problems
 Currently burp-cli only supports HTTP 1.0 for request, due to using sockets directly.
