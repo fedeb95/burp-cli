@@ -33,7 +33,7 @@ def main():
     positions = re.findall(f'{placeholder}[^{placeholder}]*{placeholder}', request_text, re.MULTILINE)
 
     payload_dict = {}
-    for i in range(0, args.payloads):
+    for i in range(0, len(args.payloads)):
         payload_dict[i] = read_file(args.payloads[i])
 
     if args.intruder:

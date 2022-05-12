@@ -68,7 +68,7 @@ As of now it only implements *Intruder* with the *Sniper* attack type, manually
 providing a file with payloads, one per line (see `./payloads.txt`).
 
 ## Problems
-Currently burp-cli only supports HTTP 1.0 for request, due to using sockets directly.
+Currently burp-cli doesn't handle HTTP 2.0 for requests, due to using sockets directly.
 
 ## TODO
 A lot.
