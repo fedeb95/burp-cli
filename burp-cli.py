@@ -16,8 +16,12 @@ def main():
                         help='Path of the file containing a request')
     parser.add_argument('-c', '--payload-positions-char', dest='placeholder', action='store', default='~',
                         help="Character used to identify payload positions in the request. Defaults to '~'")
-    parser.add_argument('-p', '--payload', dest='payload', action='store',
-                        help='Path of the file containing payloads')
+    parser.add_argument('-p', '--payloads', dest='payloads', action='store', nargs='+',
+                        help='Path of the files containing payloads')
+    parser.add_argument('-i', '--intruder', dest='intruder', action='store_true',
+                        help='Select Intruder attack type')
+    parser.add_argument('-cb', '--cluster-bomb', dest='cluster_bomb', action='store_true',
+                        help='Select Cluster Bomb attack type')
     args = parser.parse_args()
 
     banner = pyfiglet.Figlet(font=random.choice(pyfiglet.FigletFont.getFonts()))
@@ -25,17 +29,26 @@ def main():
 
     request_lines = read_file(args.request)
     request_text = '\r\n'.join(request_lines)
-    payloads = read_file(args.payload)
     placeholder = args.placeholder
-    positions = re.findall(f'{placeholder}[^~]*{placeholder}', request_text, re.MULTILINE)
+    positions = re.findall(f'{placeholder}[^{placeholder}]*{placeholder}', request_text, re.MULTILINE)
 
-    # python magic to get all permutations with repetitions of payloads
-    parameters = itertools.product(*([payloads] * len(positions)))
-    for param in parameters:
-        substituted = request_text
-        for i in range(0, len(positions)):
-            substituted = re.sub(positions[i], param[i], substituted, re.MULTILINE)
-        make_request(args, substituted)
+    payload_dict = {}
+    for i in range(0, args.payloads):
+        payload_dict[i] = read_file(args.payloads[i])
+
+    if args.intruder:
+        payload = payload_dict[0]
+        # python magic to get all permutations with repetitions of payloads
+        parameters = itertools.product(*([payload] * len(positions)))
+        for param in parameters:
+            substituted = request_text
+            for i in range(0, len(positions)):
+                substituted = re.sub(positions[i], param[i], substituted, re.MULTILINE)
+            make_request(args, substituted)
+    elif args.cluster_bomb:
+        pass
+    else:
+        print("Specify an attack type. Supported: --intruder")
     
 if __name__=='__main__':
     main()
